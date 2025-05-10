@@ -60,7 +60,7 @@ jobs:
           python-version-file: '.python-version'
 
       - name: Install project
-        run: uv pip install --system -r pyproject.toml
+        run: uv pip install --system -r pyproject.toml --dev
 
       - name: Run mypy
         run: mypy
