@@ -64,4 +64,4 @@ class ReportFactoryImlp(ReportFactory):
             )
         )
 
-        return cast(DeviceReport, DeviceReportProxy(device_report, self._event_adder))
+        return cast("DeviceReport", DeviceReportProxy(device_report, self._event_adder))
