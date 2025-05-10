@@ -17,11 +17,11 @@ class SqlReportRepository(ReportRepository):
         self._event_adder = event_adder
 
     def add(self, report: DeviceReport) -> None:
-        proxy = cast(DeviceReportProxy, report)
+        proxy = cast("DeviceReportProxy", report)
         self._session.add(proxy.device_report)
 
     async def delete(self, report: DeviceReport) -> None:
-        proxy = cast(DeviceReportProxy, report)
+        proxy = cast("DeviceReportProxy", report)
         await self._session.delete(proxy.device_report)
 
     async def with_device_id(self, device_id: ReportId) -> list[DeviceReport]:
@@ -29,7 +29,7 @@ class SqlReportRepository(ReportRepository):
         reports = (await self._session.execute(stmt)).scalars().all()
 
         return [
-            cast(DeviceReport, DeviceReportProxy(report, self._event_adder))
+            cast("DeviceReport", DeviceReportProxy(report, self._event_adder))
             for report in reports
         ]
 
@@ -40,4 +40,4 @@ class SqlReportRepository(ReportRepository):
         if not report:
             return None
 
-        return cast(DeviceReport, DeviceReportProxy(report, self._event_adder))
+        return cast("DeviceReport", DeviceReportProxy(report, self._event_adder))

@@ -176,4 +176,4 @@ def build_logger() -> structlog.stdlib.BoundLogger:
     root_logger.addHandler(handler)
     root_logger.setLevel(logging.INFO)
 
-    return cast(structlog.stdlib.BoundLogger, structlog.get_logger("reports"))
+    return cast("structlog.stdlib.BoundLogger", structlog.get_logger("reports"))

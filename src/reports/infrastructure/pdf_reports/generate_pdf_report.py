@@ -4,9 +4,8 @@ from typing import TYPE_CHECKING, Any, Final, cast
 
 from bazario.asyncio import Sender
 from hatchet_sdk import Context
-from hatchet_sdk.runnables.task import Task
 from hatchet_sdk.runnables.workflow import Workflow
-from socketio import AsyncServer  # type: ignore
+from socketio import AsyncServer
 
 from reports.application.operations.read.load_media_by_report_id import (
     LoadMediaByReportId,
@@ -17,6 +16,7 @@ from reports.infrastructure.pdf_reports.shemas import CreatePdfReportRequest
 
 if TYPE_CHECKING:
     from dishka import AsyncContainer
+    from hatchet_sdk.runnables.task import Task
 
 REPORTS_WORKFLOW: Final[Workflow] = HATCHET.workflow(
     name="reports", input_validator=CreatePdfReportRequest
@@ -54,9 +54,9 @@ async def emitting_media_task(
     container = cast("AsyncContainer", ctx.lifespan.dishka_container)
     sio = await container.get(AsyncServer)
     media = cast(
-        dict[str, dict[str, Any]],
+        "dict[str, dict[str, Any]]",
         await ctx.task_output(
-            cast(Task[Any, Awaitable[Any]], load_media_by_report_id_task)
+            cast("Task[Any, Awaitable[Any]]", load_media_by_report_id_task)
         ),
     )
 
